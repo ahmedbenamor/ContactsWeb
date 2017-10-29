@@ -1,0 +1,6 @@
+ng new ContactsWeb
+ng serve
+// install bootstrap
+npm install bootstrap --save
+ng generate component contacts
+ng generate component about
