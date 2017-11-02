@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Contact} from "../../model/model.contact";
+import {ContactsService} from "../../services/contacts.service";
 
 @Component({
   selector: 'app-new-contact',
@@ -8,12 +9,27 @@ import {Contact} from "../../model/model.contact";
 })
 export class NewContactComponent implements OnInit {
  contact : Contact= new Contact();
-  constructor() { }
+ mode: number = 1;
+  constructor(public contactsService: ContactsService) {
+    console.log("constructor !");
+  }
 
   ngOnInit() {
+    console.log("ng on init");
   }
 
   saveContact(){
-    console.log(this.contact);
+    if(this.mode == 2){
+      this.contact =  new Contact();
+      this.mode = 1;
+      return;
+    }
+    this.contactsService.saveContacts(this.contact).subscribe(data => {
+      this.contact = data;
+      this.mode = 2;
+      },
+     err => console.log(err) );
+
+
   }
 }
